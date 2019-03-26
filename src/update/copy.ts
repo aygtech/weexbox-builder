@@ -1,4 +1,4 @@
-import { Context } from './context'
+import Context from './context'
 import { emptyDirSync, copySync } from 'fs-extra'
 import { join } from 'path'
 import AdmZip from 'adm-zip'

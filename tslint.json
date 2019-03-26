@@ -14,7 +14,8 @@
     "arrow-parens": false,
     "object-literal-sort-keys": false,
     "semicolon": [true, "never"],
-    "no-console": false
+    "no-console": false,
+    "variable-name": false
   },
   "rulesDirectory": []
 }

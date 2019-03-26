@@ -1,7 +1,9 @@
 import { join } from 'path'
 import Util from '../util'
+import { readFileSync } from 'fs-extra'
+import { trim, union, remove } from 'lodash'
 
-export class Context {
+export default class Context {
   ignoreFileName = 'update-ignore.txt'
   configFileName = 'update-config.json'
   md5FileName = 'update-md5.json'
@@ -21,4 +23,24 @@ export class Context {
   androidStaticPath = join(this.android, 'static')
   iosStaticPath = join(this.ios, 'static')
   weexboxConfigPath = Util.projectPath('config/weexbox-config.js')
+  ignoredList = this.getIgnoredFiles(this.ignoreFilePath)
+
+  getIgnoredFiles(path: string): string[] {
+    const projectIgnore = this.readIgnoredFilesProjectConfig(path)
+    const ignoredList = union(this.defaultIgnoreList, projectIgnore)
+    remove(ignoredList, (item) => {
+      return item.indexOf('#') === 0 || trim(item).length === 0
+    })
+    return ignoredList
+  }
+
+  readIgnoredFilesProjectConfig(path: string): string[] {
+    let fileContent: string
+    try {
+      fileContent = readFileSync(path, 'utf8')
+    } catch (e) {
+      return []
+    }
+    return trim(fileContent).split(/\n/)
+  }
 }

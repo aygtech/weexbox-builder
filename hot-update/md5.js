@@ -59,7 +59,6 @@ function prepareFilesHashQueue(files) {
 
 function prepareConfig(context) {
   let config = {}
-
   try {
     config = fs.readFileSync(context.defaultConfigFilePath, 'utf8')
     config = JSON.parse(config)
