@@ -3,8 +3,8 @@ import { emptyDirSync, copySync } from 'fs-extra'
 import { join } from 'path'
 import AdmZip from 'adm-zip'
 
-export class Copy {
-  constructor(configName: string) {
+export default class Copy {
+  static copy(configName: string) {
     const context = new Context()
     emptyDirSync(context.android)
     emptyDirSync(context.ios)

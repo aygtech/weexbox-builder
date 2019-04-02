@@ -5,6 +5,9 @@
   "bin": {
     "weexbox-builder": "./bin/weexbox-builder.js"
   },
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/aygtech/weexbox-builder"

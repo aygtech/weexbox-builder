@@ -11,7 +11,7 @@ export default class Md5 {
   md5: string
   path: string
 
-  async calculate(): Promise<any> {
+  static async calculate(): Promise<any> {
     const context = new Context()
     const files = await recursive(context.wwwFolderPath, context.ignoredList)
     const results = new Array()
@@ -27,7 +27,7 @@ export default class Md5 {
     })
   }
 
-  prepareConfig(context: Context): Config {
+  static prepareConfig(context: Context): Config {
     let config = new Config()
     try {
       config = JSON.parse(readFileSync(context.defaultConfigFilePath, 'utf8'))
@@ -39,16 +39,16 @@ export default class Md5 {
     return config
   }
 
-  calculateTimestamp(): string {
+  static calculateTimestamp(): string {
     return timestamp('YYYY.MM.DD.HH.mm.ss')
   }
 
-  hashFile(file: string, context: Context): Md5 {
+  static hashFile(file: string, context: Context): Md5 {
     const md5 = sync(file)
     const path = relative(context.wwwFolderPath, file).replace(new RegExp('\\\\', 'g'), '/')
     const m5 = new Md5()
     m5.md5 = md5
-    m5.path = file
+    m5.path = path
     return m5
   }
 }

@@ -1,4 +1,7 @@
-import {webpack} from 'webpack'
+import * as webpack from 'webpack'
+import Md5 from '../update/md5'
+import Copy from '../update/copy'
+import Ready from '../update/ready'
 
 export default class Pack {
   constructor(name: string) {
@@ -14,12 +17,19 @@ export default class Pack {
           hash: false,
           version: false,
           timings: false,
-          builtAt: false
-        })
+          builtAt: false,
+        }),
       )
       if (err == null) {
-        update(name)
+        this.update(name)
       }
+    })
+  }
+
+  update(name) {
+    Md5.calculate().then(() => {
+      Copy.copy(name)
+      Ready.ready()
     })
   }
 }
