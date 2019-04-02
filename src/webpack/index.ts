@@ -5,7 +5,7 @@ import Ready from '../update/ready'
 
 export default class Pack {
   constructor(name: string) {
-    const webpackConfig = require(`./webpack.${name}.config`)
+    const webpackConfig = require(`../../webpack.${name}.config`)
     webpack(webpackConfig, (err, stats) => {
       process.stdout.write(
         stats.toString({
