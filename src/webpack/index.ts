@@ -2,11 +2,33 @@ import * as webpack from 'webpack'
 import Md5 from '../update/md5'
 import Copy from '../update/copy'
 import Ready from '../update/ready'
+import DevelopConfig from './develop.config'
+import TestConfig from './test.config'
+import PreReleaseConfig from './preRelease.config'
+import ReleaseConfig from './release.config'
 
 export default class Pack {
-  constructor(name: string) {
-    const webpackConfig = require(`./${name}.config`)
-    webpack(webpackConfig, (err, stats) => {
+
+  static build(name: string) {
+    let weexConfig: any
+    switch (name) {
+      case 'develop':
+        weexConfig = new DevelopConfig().weexConfig
+        break
+      case 'test':
+        weexConfig = new TestConfig().weexConfig
+        break
+      case 'preRelease':
+        weexConfig = new PreReleaseConfig().weexConfig
+        break
+      case 'release':
+        weexConfig = new ReleaseConfig().weexConfig
+        break
+      default:
+        break
+    }
+    console.log(JSON.stringify(weexConfig))
+    webpack(weexConfig, (err, stats) => {
       process.stdout.write(
         stats.toString({
           colors: true,
@@ -26,7 +48,7 @@ export default class Pack {
     })
   }
 
-  update(name) {
+  static update(name: string) {
     Md5.calculate().then(() => {
       Copy.copy(name)
       Ready.ready()

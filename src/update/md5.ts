@@ -1,8 +1,7 @@
-import { readFileSync, createReadStream, writeFileSync } from 'fs-extra'
+import { readFileSync, writeFileSync, readdirSync } from 'fs-extra'
 import Context from './context'
 import Config from './config'
 import timestamp from 'time-stamp'
-import recursive from 'recursive-readdir'
 import hidefile from 'hidefile'
 import { relative } from 'path'
 import { sync } from 'md5-file'
@@ -13,7 +12,9 @@ export default class Md5 {
 
   static async calculate(): Promise<any> {
     const context = new Context()
-    const files = await recursive(context.wwwFolderPath, context.ignoredList)
+    const files = readdirSync(context.wwwFolderPath)
+    console.log(JSON.stringify(files))
+    // const files = await recursive(context.wwwFolderPath, context.ignoredList)
     const results = new Array()
     files.forEach(file => {
       if (!hidefile.isHiddenSync(file)) {

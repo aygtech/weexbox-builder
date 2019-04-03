@@ -1,4 +1,4 @@
-import WebpackBar from 'webpackbar'
+import * as WebpackBar from 'webpackbar'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 import Util from '../util'
 import Context from '../update/context'
@@ -26,15 +26,6 @@ export default class CommonConfig {
     },
     module: {
       rules: [
-        {
-          test: /\.(js|vue)$/,
-          enforce: 'pre',
-          include: [Util.projectPath(this.context.sourceDir)],
-          loader: 'eslint-loader',
-          options: {
-            formatter: require('eslint-friendly-formatter'),
-          },
-        },
         {
           test: /\.js$/,
           use: [
