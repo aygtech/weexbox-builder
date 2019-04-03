@@ -9,16 +9,15 @@ export default class Util {
 
   static entries(): Map<string, string> {
     const context = new Context()
-    const pagePath = this.projectPath(context.sourceDir)
-    console.log(pagePath)
+    const sourcePath = this.projectPath(context.sourceDir)
+    const globPath = `${sourcePath}/*/*/index.js`
     const entries = new Map<string, string>()
-    sync(pagePath).forEach((indexEntry) => {
+    sync(globPath).forEach((indexEntry) => {
       const tmp = indexEntry.split('/').splice(-3)
       const moduleName = `${tmp.slice(0, 1).toString()}/${tmp.slice(1, 2).toString()}`
       entries[moduleName] = [indexEntry]
     })
-    console.log(JSON.stringify(entries))
+    // console.log(JSON.stringify(entries))
     return entries
   }
 }
-

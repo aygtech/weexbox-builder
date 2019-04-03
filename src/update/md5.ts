@@ -1,31 +1,24 @@
-import { readFileSync, writeFileSync, readdirSync } from 'fs-extra'
+import { readFileSync, writeFileSync, writeJsonSync } from 'fs-extra'
 import Context from './context'
 import Config from './config'
-import timestamp from 'time-stamp'
-import hidefile from 'hidefile'
+const timestamp = require('time-stamp')
 import { relative } from 'path'
 import { sync } from 'md5-file'
+import * as readDir from 'readdir'
 
 export default class Md5 {
   md5: string
   path: string
 
-  static async calculate(): Promise<any> {
+  static calculate() {
     const context = new Context()
-    const files = readdirSync(context.wwwFolderPath)
-    console.log(JSON.stringify(files))
-    // const files = await recursive(context.wwwFolderPath, context.ignoredList)
+    const files = readDir.readSync(context.wwwFolderPath, ['**.js'], readDir.ABSOLUTE_PATHS)
     const results = new Array()
     files.forEach(file => {
-      if (!hidefile.isHiddenSync(file)) {
-        results.push(this.hashFile(file, context))
-      }
+      results.push(this.hashFile(file, context))
     })
-    const json = JSON.stringify(results, null, 2)
-    writeFileSync(context.configFilePath, json)
-    return new Promise<boolean>(resolve => {
-      resolve()
-    })
+    writeJsonSync(context.md5FilePath, results, { spaces: 2})
+    writeJsonSync(context.configFilePath, this.prepareConfig(context), { spaces: 2})
   }
 
   static prepareConfig(context: Context): Config {

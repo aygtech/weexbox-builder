@@ -9,7 +9,6 @@ export default class CommonConfig {
   plugins = [
     new WebpackBar({
       name: 'WeexBox',
-      profile: true,
     }),
     new CleanWebpackPlugin(),
   ]
@@ -19,7 +18,7 @@ export default class CommonConfig {
     entry: Util.entries(),
     output: {
       path: this.context.distPath,
-      filename: '[name].js',
+      filename: `${this.context.wwwDic}/[name].js`,
     },
     resolve: {
       extensions: ['.mjs', '.js', '.vue', '.json'],

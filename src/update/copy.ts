@@ -1,7 +1,7 @@
 import Context from './context'
 import { emptyDirSync, copySync } from 'fs-extra'
 import { join } from 'path'
-import AdmZip from 'adm-zip'
+const AdmZip = require('adm-zip')
 
 export default class Copy {
   static copy(configName: string) {

@@ -27,7 +27,7 @@ export default class Pack {
       default:
         break
     }
-    console.log(JSON.stringify(weexConfig))
+    // console.log(JSON.stringify(weexConfig))
     webpack(weexConfig, (err, stats) => {
       process.stdout.write(
         stats.toString({
@@ -49,9 +49,8 @@ export default class Pack {
   }
 
   static update(name: string) {
-    Md5.calculate().then(() => {
-      Copy.copy(name)
-      Ready.ready()
-    })
+    Md5.calculate()
+    Copy.copy(name)
+    Ready.ready()
   }
 }

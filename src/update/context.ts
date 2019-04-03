@@ -1,7 +1,5 @@
 import { join } from 'path'
 import Util from '../util'
-import { readFileSync } from 'fs-extra'
-import { trim, union, remove } from 'lodash'
 
 export default class Context {
   nodeConfiguration = {
@@ -48,17 +46,14 @@ export default class Context {
   }
   sourceDir = 'src'
   distDir = 'dist'
-  // distDir = this.distDir + 'www'
+  wwwDic = 'www'
   staticDir = 'static'
-  ignoreFileName = 'update-ignore.txt'
   configFileName = 'update-config.json'
   md5FileName = 'update-md5.json'
-  defaultIgnoreList = ['.DS_Store', this.md5FileName, this.configFileName, '.gitignore', '.gitkeep', '.git']
   versionFileName = 'update-version.txt'
   distPath = Util.projectPath(this.distDir)
-  wwwFolderPath = join(this.distPath, 'www')
+  wwwFolderPath = join(this.distPath, this.wwwDic)
   configPath = Util.projectPath('config')
-  ignoreFilePath = join(this.configPath, this.ignoreFileName)
   defaultConfigFilePath = join(this.configPath, this.configFileName)
   configFilePath = join(this.wwwFolderPath, this.configFileName)
   md5FilePath = join(this.wwwFolderPath, this.md5FileName)
@@ -69,24 +64,4 @@ export default class Context {
   androidStaticPath = join(this.android, this.staticDir)
   iosStaticPath = join(this.ios, this.staticDir)
   weexboxConfigPath = Util.projectPath('config/weexbox-config.js')
-  ignoredList = this.getIgnoredFiles(this.ignoreFilePath)
-
-  getIgnoredFiles(path: string): string[] {
-    const projectIgnore = this.readIgnoredFilesProjectConfig(path)
-    const ignoredList = union(this.defaultIgnoreList, projectIgnore)
-    remove(ignoredList, (item) => {
-      return item.indexOf('#') === 0 || trim(item).length === 0
-    })
-    return ignoredList
-  }
-
-  readIgnoredFilesProjectConfig(path: string): string[] {
-    let fileContent: string
-    try {
-      fileContent = readFileSync(path, 'utf8')
-    } catch (e) {
-      return []
-    }
-    return trim(fileContent).split(/\n/)
-  }
 }
