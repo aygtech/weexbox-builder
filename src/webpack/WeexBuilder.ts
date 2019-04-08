@@ -235,23 +235,35 @@ new Vue(App)
          * See: http://webpack.github.io/docs/configuration.html#module
          */
         module: {
-          rules: [
-            {
-              test: /\.js$/,
-              use: [
-                {
-                  loader: 'babel-loader',
+          rules: [{
+            test: /\.(png|jpg|gif)$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  outputPath: 'static',
+                  publicPath: `http://${this.options.ip}:${this.options.port}/${this.options.BUNDLE_DIRECTORY}/static/`,
+                  name: '[name]_[hash].[ext]',
                 },
-              ],
-            },
-            {
-              test: /\.we$/,
-              use: [
-                {
-                  loader: 'weex-loader',
-                },
-              ],
-            },
+              },
+            ],
+          },
+          {
+            test: /\.js$/,
+            use: [
+              {
+                loader: 'babel-loader',
+              },
+            ],
+          },
+          {
+            test: /\.we$/,
+            use: [
+              {
+                loader: 'weex-loader',
+              },
+            ],
+          },
           ],
         },
         /**
