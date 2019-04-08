@@ -1,4 +1,4 @@
-const WeexBuilder = require('./src/weexBuilder');
+const WeexBuilder = require('./lib/webpack/weexBuilder');
 exports.build = function (source, dest, options, debugConfig, callback) {
   if (!source || typeof source !== 'string' || (Array.isArray(source) && source.length === 0)) {
     return Promise.reject('The source path can not be empty!');
