@@ -1,6 +1,6 @@
 {
   "name": "@weexbox/builder",
-  "version": "2.0.7-beta",
+  "version": "2.0.8-beta",
   "main": "index.js",
   "bin": {
     "weexbox-builder": "./bin/weexbox-builder.js"
@@ -16,18 +16,22 @@
     "weexbox",
     "weex",
     "build",
+    "builder",
     "weexteam",
     "compile"
   ],
   "author": "myeveryheart@qq.com",
+  "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.4.3",
     "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "adm-zip": "^0.4.13",
+    "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.1",
     "commander": "^2.20.0",
+    "debug": "^4.1.1",
     "file-loader": "^3.0.1",
     "fs-extra": "^7.0.1",
     "glob": "^7.1.3",

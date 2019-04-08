@@ -13,9 +13,9 @@ import * as DEBUG from 'debug'
 import { exist } from './utils'
 import { vueLoader } from './vueLoader'
 import WebpackBuilder from './WebpackBuilder'
-import Context from '../update/context'
+import CommonConfig from './common.config'
 
-const debug = DEBUG('weex:compile')
+const debug = DEBUG('weexbox-builder')
 
 export class WeexBuilder extends WebpackBuilder {
   private vueTemplateFloder: string = '.temp'
@@ -30,7 +30,7 @@ export class WeexBuilder extends WebpackBuilder {
     super(source, dest, options)
   }
 
-  private nodeConfiguration = new Context().nodeConfiguration
+  private weexConfig = new CommonConfig().weexConfig
 
   async resolveConfig() {
     const destExt = path.extname(this.dest)
@@ -224,7 +224,7 @@ new Vue(App)
         },
         devtool: this.options.devtool || 'eval-source-map',
         resolve: {
-          extensions: ['.js', '.vue', '.json'],
+          extensions: this.weexConfig.resolve.extensions,
           alias: {
             '@': this.base || path.resolve('src'),
           },
@@ -241,12 +241,6 @@ new Vue(App)
               use: [
                 {
                   loader: 'babel-loader',
-                  options: {
-                    presets: [
-                      path.join(__dirname, '../node_modules/babel-preset-es2015'),
-                      path.join(__dirname, '../node_modules/babel-preset-stage-0'),
-                    ],
-                  },
                 },
               ],
             },
@@ -324,7 +318,7 @@ new Vue(App)
             },
           ],
         })
-        configs.node = this.nodeConfiguration
+        configs.node = this.weexConfig.node
       }
       if (this.options.min) {
         /*
