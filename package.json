@@ -1,6 +1,6 @@
 {
   "name": "@weexbox/builder",
-  "version": "2.0.8-beta",
+  "version": "2.0.10-beta",
   "main": "index.js",
   "bin": {
     "weexbox-builder": "./bin/weexbox-builder.js"
